@@ -60,7 +60,7 @@ class DiyPlayerView: UIView {
     var hideControlViewTimer: Timer!
     var dateTimeDisplayTimer: Timer!
     var clickDebounceTimer: Timer!
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override init(frame: CGRect) {
         super.init(frame: frame)
