@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Dplayer'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = 'A video player.'
 
 # This description is used to generate tags and improve search results.
@@ -40,4 +40,5 @@ A video player developed by Swift.
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'SnapKit', '~> 5.0.0'
   s.dependency 'Toast-Swift', '~> 5.0.1'
+  s.swift_version= "4.2"
 end
