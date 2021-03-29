@@ -1,6 +1,6 @@
 //
-//  DiyPlayerView.swift
-//  diyplayer
+//  DplayerView.swift
+//  Dplayer
 //
 //  Created by sidney on 2018/8/26.
 //  Copyright © 2018年 sidney. All rights reserved.
@@ -18,12 +18,12 @@ enum PanType {
     case progress
 }
 
-protocol DiyPlayerDelegate {
+protocol DplayerDelegate {
     func fullScreen()
     func exitFullScreen()
 }
 
-class DiyPlayerView: UIView {
+class DplayerView: UIView {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var playerView: UIView!
@@ -65,12 +65,12 @@ class DiyPlayerView: UIView {
     var hideControlViewTimer: Timer!
     var dateTimeDisplayTimer: Timer!
     var clickDebounceTimer: Timer!
-    var delegate: DiyPlayerDelegate?
+    var delegate: DplayerDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         print("frame")
-        Bundle.main.loadNibNamed("DiyPlayerView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("DplayerView", owner: self, options: nil)
         self.frame = frame
     }
 
@@ -474,7 +474,7 @@ class DiyPlayerView: UIView {
 }
 
 // 控制条显示
-extension DiyPlayerView {
+extension DplayerView {
     @objc func fadeControlView() {
         if fadeControlViewLock == 1 {
             return
@@ -529,7 +529,7 @@ extension DiyPlayerView {
 }
 
 // 时间显示
-extension DiyPlayerView {
+extension DplayerView {
     
     @objc func updateDateTime() {
         dateTimeDisplayLabel.text = TimeUtil.getCurrentTime()
