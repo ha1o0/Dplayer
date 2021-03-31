@@ -18,12 +18,12 @@ enum PanType {
     case progress
 }
 
-protocol DplayerDelegate {
+open protocol DplayerDelegate {
     func fullScreen()
     func exitFullScreen()
 }
 
-class DplayerView: UIView {
+open class DplayerView: UIView {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var playerView: UIView!
