@@ -18,12 +18,12 @@ enum PanType {
     case progress
 }
 
-open protocol DplayerDelegate {
+public protocol DplayerDelegate {
     func fullScreen()
     func exitFullScreen()
 }
 
-open class DplayerView: UIView {
+public class DplayerView: UIView {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var playerView: UIView!
@@ -74,7 +74,7 @@ open class DplayerView: UIView {
         self.frame = frame
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         print("coder")
     }
@@ -168,7 +168,7 @@ open class DplayerView: UIView {
         hasSetControlView = true
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         print("layout")
         super.layoutSubviews()
         if controlView != nil && topControlView != nil {
@@ -176,7 +176,7 @@ open class DplayerView: UIView {
         }
     }
 
-    override func observeValue(forKeyPath keyPath: String?,
+    public override func observeValue(forKeyPath keyPath: String?,
                                of object: Any?,
                                change: [NSKeyValueChangeKey : Any]?,
                                context: UnsafeMutableRawPointer?) {
