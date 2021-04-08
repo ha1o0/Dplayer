@@ -65,9 +65,9 @@ public class DplayerView: UIView {
     var hideControlViewTimer: Timer!
     var dateTimeDisplayTimer: Timer!
     var clickDebounceTimer: Timer!
-    var delegate: DplayerDelegate?
+    public var delegate: DplayerDelegate?
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         print("frame")
         Bundle.main.loadNibNamed("DplayerView", owner: self, options: nil)
@@ -119,7 +119,7 @@ public class DplayerView: UIView {
         self.getSystemVolumeSlider().value = value
     }
 
-    func commonInit() {
+    public func commonInit() {
         let loadingGif = UIImage.gifImageWithName("juhua")
         loadingImageView = UIImageView(image: loadingGif)
         self.playerView.addSubview(loadingImageView)
@@ -276,7 +276,7 @@ public class DplayerView: UIView {
         }
     }
     
-    @objc func fullScreen() {
+    @objc public func fullScreen() {
         isFullScreen = true
         self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
         playerLayer.frame = self.bounds
@@ -289,7 +289,7 @@ public class DplayerView: UIView {
         
     }
     
-    @objc func exitFullScreen() {
+    @objc public func exitFullScreen() {
         isFullScreen = false
         self.frame = originalFrame
         playerLayer.frame = self.bounds
@@ -384,7 +384,7 @@ public class DplayerView: UIView {
         
     }
     
-    @objc func playToEnd() {
+    @objc public func playToEnd() {
         if player == nil {
             return
         }
@@ -394,7 +394,7 @@ public class DplayerView: UIView {
         bottomProgressView.progress = 0
     }
     
-    func closePlayer(){
+    public func closePlayer(){
         if (player != nil) {
             print("关闭播放器")
             player.pause()
@@ -404,7 +404,7 @@ public class DplayerView: UIView {
         }
     }
     
-    func playUrl(url: String) {
+    public func playUrl(url: String) {
         if url == videoUrl {
             print("地址未变化")
             return
@@ -434,7 +434,7 @@ public class DplayerView: UIView {
         startHideControlViewTimer()
     }
     
-    @objc func reset() {
+    @objc public func reset() {
         currentTime = "00:00"
         totalTime = "00:00"
         timeDisplay.text = "\(currentTime)/\(totalTime)"
@@ -546,7 +546,7 @@ extension DplayerView {
 }
 
 extension AVPlayer {
-    var isPlaying: Bool {
+    public var isPlaying: Bool {
         return self.rate != 0 && self.error == nil
     }
 }
