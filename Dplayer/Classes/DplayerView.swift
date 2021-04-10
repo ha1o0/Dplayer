@@ -148,13 +148,13 @@ public class DplayerView: UIView {
     }
     
     func initSlider() {
-        progressSlider.setThumbImage(UIImage(named: "sliderThumb"), for: .normal)
-        progressSlider.setThumbImage(UIImage(named: "sliderThumb"), for: .highlighted)
+        progressSlider.setThumbImage(UIImage.getUIImageByName("sliderThumb"), for: .normal)
+        progressSlider.setThumbImage(UIImage.getUIImageByName("sliderThumb"), for: .highlighted)
         progressSlider.minimumValue = 0
         progressSlider.value = 0
         cacheSlider.isUserInteractionEnabled = false
-        cacheSlider.setThumbImage(UIImage(named: "transparent"), for: .normal)
-        cacheSlider.setThumbImage(UIImage(named: "transparent"), for: .highlighted)
+        cacheSlider.setThumbImage(UIImage.getUIImageByName("transparent"), for: .normal)
+        cacheSlider.setThumbImage(UIImage.getUIImageByName("transparent"), for: .highlighted)
         cacheSlider.minimumValue = 0
         cacheSlider.value = 0
         progressSlider.isContinuous = false
@@ -313,7 +313,7 @@ public class DplayerView: UIView {
             return
         }
         player.isPlaying ? player.pause() : player.play()
-        sender.setImage(player.isPlaying ? UIImage(named: "pause") : UIImage(named: "play"), for: .normal)
+        sender.setImage(player.isPlaying ? UIImage.getUIImageByName("pause") : UIImage.getUIImageByName("play"), for: .normal)
         loadingImageView.isHidden = !player.isPlaying
         print("isplaying", player.isPlaying)
     }
@@ -337,7 +337,7 @@ public class DplayerView: UIView {
         player.seek(to: CMTimeMakeWithSeconds(Float64(slider.value), preferredTimescale: 64))
         player.play()
         loadingImageView.isHidden = !player.isPlaying
-        self.playBtn.setImage(UIImage(named: "pause"), for: .normal)
+        self.playBtn.setImage(UIImage.getUIImageByName("pause"), for: .normal)
         self.centerProgressDisplayLabel.isHidden = true
         sliderThumbFollowGesture = false
         if showControlView {
@@ -396,7 +396,7 @@ public class DplayerView: UIView {
         if player == nil {
             return
         }
-        playBtn.setImage(UIImage(named: "play"), for: .normal)
+        playBtn.setImage(UIImage.getUIImageByName("play"), for: .normal)
         playerItem.seek(to: CMTime.zero) { (bool) in }
         player.pause()
         bottomProgressView.progress = 0

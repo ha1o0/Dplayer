@@ -10,8 +10,14 @@ import Foundation
 import UIKit
 
 extension UIImage {
+    
+    public class func getUIImageByName(_ name: String) -> UIImage? {
+        let result = UIImage(named: name, in: getBundle(), compatibleWith: nil)
+        return result ?? nil
+    }
+    
     //生成圆形图片
-    func toCircle() -> UIImage {
+    public func toCircle() -> UIImage {
         //取最短边长
         let shotest = min(self.size.width, self.size.height)
         //输出尺寸

@@ -1,7 +1,11 @@
 import UIKit
 
+public func getBundle() -> Bundle {
+    return Bundle.init(for: DplayerView.classForCoder())
+}
+
 public func viewFromNib<T: UIView>(_ nibName: String) -> T {
-    return Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)?.first as! T
+    return getBundle().loadNibNamed(nibName, owner: nil, options: nil)?.first as! T
 }
 
 public func registerNibWithName(_ nibName: String, tableView: UITableView) {

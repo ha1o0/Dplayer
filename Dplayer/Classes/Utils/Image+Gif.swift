@@ -50,7 +50,7 @@ extension UIImage {
     }
     
     public class func gifImageWithName(_ name: String) -> UIImage? {
-        guard let bundleURL = Bundle.main
+        guard let bundleURL = getBundle()
             .url(forResource: name, withExtension: "gif") else {
                 print("SwiftGif: This image named \"\(name)\" does not exist")
                 return nil
