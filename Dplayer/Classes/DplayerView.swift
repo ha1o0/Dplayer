@@ -70,15 +70,22 @@ public class DplayerView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         print("frame")
-        Bundle.main.loadNibNamed("DplayerView", owner: self, options: nil)
-        self.frame = frame
+        nibInit()
+//        self.frame = frame
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         print("coder")
     }
-
+    
+    public func nibInit() {
+        let bundle = Bundle(for: DplayerView.self)
+        let viewFromXib = bundle.loadNibNamed("DplayerView", owner: self, options: nil)![0] as! UIView
+        viewFromXib.frame = self.bounds
+        addSubview(viewFromXib)
+    }
+    
     func addGesture() {
         // 单击隐藏控制条手势
         let clickTap = UITapGestureRecognizer(target: self, action: #selector(clickTapPlayer(_:)))
@@ -137,6 +144,7 @@ public class DplayerView: UIView {
         addSubview(contentView)
         originalFrame = self.frame
         startDateTimeTimer()
+        print(videoUrl)
     }
     
     func initSlider() {
@@ -432,6 +440,8 @@ public class DplayerView: UIView {
         playOrPause(self.playBtn)
         videoUrl = url
         startHideControlViewTimer()
+        print("playeee")
+        print(videoUrl)
     }
     
     @objc public func reset() {

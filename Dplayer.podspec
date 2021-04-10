@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Dplayer'
-  s.version          = '0.9.0'
+  s.version          = '1.0.0'
   s.summary          = 'A video player.'
 
 # This description is used to generate tags and improve search results.
@@ -33,7 +33,8 @@ A video player developed by Swift.
   s.source_files = 'Dplayer/Classes/**/*'
   
    s.resource_bundles = {
-     'Dplayer' => ['Dplayer/**']
+     'Dplayer' => ['Dplayer/**'],
+     'Dplayer' => ['Dplayer/Classes/*.xib']
    }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

@@ -25,6 +25,14 @@ class TimeUtil {
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: currentDate)
         let minute = calendar.component(.minute, from: currentDate)
-        return "\(hour):\(minute)"
+        var hourStr = "\(hour)"
+        var minuteStr = "\(minute)"
+        if minute < 9 {
+            minuteStr = "0\(minuteStr)"
+        }
+        if hour < 9 {
+            hourStr = "0\(hourStr)"
+        }
+        return "\(hourStr):\(minuteStr)"
     }
 }
