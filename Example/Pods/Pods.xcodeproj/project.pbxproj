@@ -68,7 +68,6 @@
 		D209B7732DA432DFA762A53BD271C97C /* UILayoutSupport+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55FC8F7FAA5ECF6AB51A44433FA041C /* UILayoutSupport+Extensions.swift */; };
 		E6B0B3D311CE797D6E047B3F46E24F1A /* Pods-Dplayer_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E5F2DD2185362A22744F2D1F29EC85A1 /* Pods-Dplayer_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E8378816DDB2B1053C3760841BAA7E09 /* ConstraintViewDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C91749F9E64EFA8E06450B1C1027D /* ConstraintViewDSL.swift */; };
-		E99BBE512621744A0002C066 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E99BBE502621744A0002C066 /* Assets.xcassets */; };
 		EB59A014C961F0E54F00B2075CB32EFC /* Pods-Dplayer_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF5FA5F8B2DCEF503D27F3477794FC8 /* Pods-Dplayer_Tests-dummy.m */; };
 		F21D165C83D793DA2141F699DD9E6DAC /* ConstraintPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B12C561B39636BFF5822EF795A1AD /* ConstraintPriority.swift */; };
 		F309204E1D442CFD665FF0038C896232 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04FEB25A5C299B6084C6CE56DEA3FBB /* SnapKit.framework */; };
@@ -218,7 +217,6 @@
 		E6EF15EA391AA57C10B400F48C50AD45 /* Toast-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Toast-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		E7753F28EA38EF150262E408B1BA4EAE /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Source/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		E7D1C2FBD7CC17B57E1756566511AD7D /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Source/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
-		E99BBE502621744A0002C066 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Dplayer/Classes/Assets.xcassets; sourceTree = "<group>"; };
 		EB0000A83E3715F467FB367D01CE6A27 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		EC0DBE8C4C596BFA81992E948C0EF198 /* Pods-Dplayer_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Dplayer_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		EC39581B023E8ABCE2FFB2C0B503A426 /* UIImage+Custom.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIImage+Custom.swift"; sourceTree = "<group>"; };
@@ -484,7 +482,6 @@
 		EBAD4ACC51225AA32E282AACD7FF90BE /* Dplayer */ = {
 			isa = PBXGroup;
 			children = (
-				E99BBE502621744A0002C066 /* Assets.xcassets */,
 				F53C67DD9A0ACB10D8F1ECA4C2566F1A /* DplayerView.swift */,
 				5CDA9B79E1531433036B40FEE33B658C /* DplayerView.xib */,
 				C206DD687E9E356CD942EDBA24EFF487 /* juhua.gif */,
@@ -729,7 +726,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E99BBE512621744A0002C066 /* Assets.xcassets in Resources */,
 				66BE5739490BE503A5678499FDE832BC /* Dplayer.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

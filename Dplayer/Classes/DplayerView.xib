@@ -182,7 +182,7 @@
                 <constraint firstItem="hjP-xm-UaE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="v5b-XF-6OZ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-156" y="905"/>
+            <point key="canvasLocation" x="137" y="1511"/>
         </view>
     </objects>
     <resources>

@@ -1,6 +1,6 @@
 {
   "name": "Dplayer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "summary": "A video player.",
   "description": "A video player developed by Swift.",
   "homepage": "https://github.com/weifengsmile/Dplayer",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/weifengsmile/Dplayer.git",
-    "tag": "1.0.0"
+    "tag": "1.0.1"
   },
   "platforms": {
     "ios": "10.0"
@@ -21,6 +21,12 @@
   "source_files": "Dplayer/Classes/**/*",
   "resource_bundles": {
     "Dplayer": [
+      "Dplayer/**"
+    ],
+    "DplayerXcassets": [
+      "Dplayer/Assets/*.xcassets"
+    ],
+    "DplayerXib": [
       "Dplayer/Classes/*.xib"
     ]
   },
