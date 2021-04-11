@@ -80,8 +80,7 @@ public class DplayerView: UIView {
     }
     
     public func nibInit() {
-        let bundle = Bundle(for: DplayerView.self)
-        let viewFromXib = bundle.loadNibNamed("DplayerView", owner: self, options: nil)![0] as! UIView
+        let viewFromXib = getBundle().loadNibNamed("DplayerView", owner: self, options: nil)![0] as! UIView
         viewFromXib.frame = self.bounds
         addSubview(viewFromXib)
     }
