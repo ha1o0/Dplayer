@@ -41,7 +41,6 @@ let diyPlayerView = DplayerView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH,
 diyPlayerView.layer.zPosition = 999
 diyPlayerView.delegate = self
 view.addSubview(diyPlayerView)
-diyPlayerView.commonInit()
 diyPlayerView.playUrl(url: videoUrl)
 ```
 

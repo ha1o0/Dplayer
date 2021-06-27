@@ -29,8 +29,8 @@ class ViewController: UIViewController, DplayerDelegate {
 //            maker.top.equalToSuperview().offset(100)
 //            maker.height.equalTo(height)
 //        }
-        diyPlayerView.commonInit()
-        diyPlayerView.playUrl(url: videos[0])
+//        diyPlayerView.commonInit()
+        diyPlayerView.playUrl(url: videos[1])
         // Do any additional setup after loading the view, typically from a nib.
     }
 
