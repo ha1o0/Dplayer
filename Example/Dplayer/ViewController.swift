@@ -23,20 +23,13 @@ class ViewController: UIViewController, DplayerDelegate {
         diyPlayerView = DplayerView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH, height: height))
         diyPlayerView.layer.zPosition = 999
         diyPlayerView.delegate = self
+        diyPlayerView.bottomProgressBarViewColor = UIColor.red
         view.addSubview(diyPlayerView)
-//        diyPlayerView.snp.makeConstraints { (maker) in
-//            maker.leading.trailing.equalToSuperview()
-//            maker.top.equalToSuperview().offset(100)
-//            maker.height.equalTo(height)
-//        }
-//        diyPlayerView.commonInit()
         diyPlayerView.playUrl(url: videos[1])
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func fullScreen() {
