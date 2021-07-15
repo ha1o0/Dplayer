@@ -8,18 +8,23 @@
 
 import UIKit
 import Dplayer
+import AVFoundation
+import AVKit
+import MediaPlayer
 
-@available(iOS 13.0, *)
 class ViewController: UIViewController, DplayerDelegate {
 
     var videos = ["https://blog.iword.win/langjie.mp4", "http://192.168.6.242/2.mp4", "https://blog.iword.win/5.mp4", "http://192.168.6.242/3.wmv", "http://192.168.6.242/mjpg.avi", "https://iqiyi.cdn9-okzy.com/20201104/17638_8f3022ce/index.m3u8"]
     let SCREEN_WIDTH = UIScreen.main.bounds.width
     let SCREEN_HEIGHT = UIScreen.main.bounds.height
+    var diyPlayerView = DplayerView()
+    var pipController: AVPictureInPictureController?
+    var vc :UIViewController?
+    var popForPip = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let height = SCREEN_WIDTH / 16 * 9
-        var diyPlayerView = DplayerView()
         diyPlayerView = DplayerView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH, height: height))
         diyPlayerView.layer.zPosition = 999
         diyPlayerView.delegate = self
@@ -28,6 +33,14 @@ class ViewController: UIViewController, DplayerDelegate {
         diyPlayerView.playUrl(url: videos[1])
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if self.popForPip {
+            return
+        }
+        self.diyPlayerView.closePlayer()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -43,6 +56,27 @@ class ViewController: UIViewController, DplayerDelegate {
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
     }
+    
+    func pip() {
+        pipController = self.diyPlayerView.getPipVc()
+        pipController?.delegate = self
+        self.diyPlayerView.startPip(pipController)
+    }
 
 }
 
+extension ViewController: AVPictureInPictureControllerDelegate {
+    // 保持当前VC不被销毁
+    func pictureInPictureControllerWillStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        self.vc = self
+        self.popForPip = true
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    // 销毁原VC，push新VC
+    func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        self.vc = nil
+        appDelegate.rootVc.navigationController?.pushViewController(ViewController(), animated: true)
+        print("pictureInPictureControllerDidStopPictureInPicture")
+    }
+}

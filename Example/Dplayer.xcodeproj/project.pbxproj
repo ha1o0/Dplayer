@@ -15,6 +15,8 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		60FBA9AA026F453ACCBC4C79 /* Pods_Dplayer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ABF8E583C2057500D950EB /* Pods_Dplayer_Example.framework */; };
 		DE502411639D50ED758A17BB /* Pods_Dplayer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDBB140D838D02B407379F2A /* Pods_Dplayer_Tests.framework */; };
+		E991AA7A26A085FD00BB7C8F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991AA7826A085FD00BB7C8F /* HomeViewController.swift */; };
+		E991AA7B26A085FD00BB7C8F /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E991AA7926A085FD00BB7C8F /* HomeViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		D4ABF8E583C2057500D950EB /* Pods_Dplayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dplayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD7FDA82E6AFE277EAD6C267 /* Pods-Dplayer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dplayer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Dplayer_Tests/Pods-Dplayer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DDBB140D838D02B407379F2A /* Pods_Dplayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dplayer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E991AA7826A085FD00BB7C8F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		E991AA7926A085FD00BB7C8F /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,8 @@
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				E991AA7826A085FD00BB7C8F /* HomeViewController.swift */,
+				E991AA7926A085FD00BB7C8F /* HomeViewController.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for Dplayer";
@@ -251,6 +257,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				E991AA7B26A085FD00BB7C8F /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +346,7 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				E991AA7A26A085FD00BB7C8F /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +499,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = win.iword.dplayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -507,7 +515,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = win.iword.dplayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
