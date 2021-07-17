@@ -21,6 +21,7 @@ class ViewController: UIViewController, DplayerDelegate {
     var pipController: AVPictureInPictureController?
     var vc :UIViewController?
     var popForPip = false
+    var video: [String: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,14 @@ class ViewController: UIViewController, DplayerDelegate {
         diyPlayerView.delegate = self
         diyPlayerView.bottomProgressBarViewColor = UIColor.red
         view.addSubview(diyPlayerView)
-        diyPlayerView.playUrl(url: videos[1])
+        if self.video["url"] == nil {
+            self.video["url"] = videos[1]
+        }
+
+        let videoProgress = self.video["progress"] ?? "0"
+        if let url = self.video["url"] {
+            diyPlayerView.playUrl(url: url, progress: Float(videoProgress) ?? 0.0)
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -62,6 +70,11 @@ class ViewController: UIViewController, DplayerDelegate {
         pipController?.delegate = self
         self.diyPlayerView.startPip(pipController)
     }
+    
+    func playing(progress: Float, url: String) {
+        Storage.pipVideo["progress"] = "\(progress)"
+        Storage.pipVideo["url"] = url
+    }
 
 }
 
@@ -76,7 +89,13 @@ extension ViewController: AVPictureInPictureControllerDelegate {
     // 销毁原VC，push新VC
     func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
         self.vc = nil
-        appDelegate.rootVc.navigationController?.pushViewController(ViewController(), animated: true)
+        print("pictureInPictureControllerDidStopPictureInPicture")
+    }
+    
+    func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        let newVc = ViewController()
+        newVc.video = Storage.pipVideo
+        appDelegate.rootVc.navigationController?.pushViewController(newVc, animated: true)
         print("pictureInPictureControllerDidStopPictureInPicture")
     }
 }

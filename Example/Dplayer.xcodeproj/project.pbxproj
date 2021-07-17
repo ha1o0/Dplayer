@@ -17,6 +17,7 @@
 		DE502411639D50ED758A17BB /* Pods_Dplayer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDBB140D838D02B407379F2A /* Pods_Dplayer_Tests.framework */; };
 		E991AA7A26A085FD00BB7C8F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991AA7826A085FD00BB7C8F /* HomeViewController.swift */; };
 		E991AA7B26A085FD00BB7C8F /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E991AA7926A085FD00BB7C8F /* HomeViewController.xib */; };
+		E991AAC726A3206000BB7C8F /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991AAC626A3206000BB7C8F /* UserDefault.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		DDBB140D838D02B407379F2A /* Pods_Dplayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dplayer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E991AA7826A085FD00BB7C8F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E991AA7926A085FD00BB7C8F /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		E991AAC626A3206000BB7C8F /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		607FACD21AFB9204008FA782 /* Example for Dplayer */ = {
 			isa = PBXGroup;
 			children = (
+				E991AAC526A3204800BB7C8F /* Utils */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -163,6 +166,14 @@
 				3A5EC5FAD046E00B0F630DA5 /* Pods-Dplayer_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E991AAC526A3204800BB7C8F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E991AAC626A3206000BB7C8F /* UserDefault.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E991AAC726A3206000BB7C8F /* UserDefault.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				E991AA7A26A085FD00BB7C8F /* HomeViewController.swift in Sources */,
