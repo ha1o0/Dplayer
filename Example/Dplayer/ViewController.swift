@@ -54,15 +54,11 @@ class ViewController: UIViewController, DplayerDelegate {
     }
 
     func fullScreen() {
-        appDelegate.deviceOrientation = .landscapeRight
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+
     }
     
     func exitFullScreen() {
-        appDelegate.deviceOrientation = .portrait
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+
     }
     
     func pip() {

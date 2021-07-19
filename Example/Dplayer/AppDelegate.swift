@@ -14,11 +14,10 @@ let appDelegate = UIApplication.shared.delegate as! AppDelegate
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var deviceOrientation = UIInterfaceOrientationMask.portrait
     var rootVc: HomeViewController = HomeViewController()
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return deviceOrientation
+        return .all
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
