@@ -61,6 +61,12 @@ class ViewController: UIViewController, DplayerDelegate {
 
     }
     
+    func readyToPlay() {
+        if self.diyPlayerView.danmus.count == 0 {
+            self.diyPlayerView.initDanmu()
+        }
+    }
+    
     func pip() {
         pipController = self.diyPlayerView.getPipVc()
         pipController?.delegate = self
