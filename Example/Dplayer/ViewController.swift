@@ -26,13 +26,13 @@ class ViewController: UIViewController, DplayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let height = SCREEN_WIDTH / 16 * 9
-        diyPlayerView = DplayerView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH, height: height))
+        diyPlayerView = DplayerView(frame: CGRect(x: 0, y: 44, width: SCREEN_WIDTH, height: height))
         diyPlayerView.layer.zPosition = 999
         diyPlayerView.delegate = self
         diyPlayerView.bottomProgressBarViewColor = UIColor.red
         view.addSubview(diyPlayerView)
         if self.video["url"] == nil {
-            self.video["url"] = videos[1]
+            self.video["url"] = videos[0]
         }
 
         let videoProgress = self.video["progress"] ?? "0"
