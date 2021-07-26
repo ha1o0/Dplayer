@@ -77,6 +77,10 @@ class ViewController: UIViewController, DplayerDelegate {
         Storage.pipVideo["progress"] = "\(progress)"
         Storage.pipVideo["url"] = url
     }
+    
+    deinit {
+        print("deinit")
+    }
 
 }
 
