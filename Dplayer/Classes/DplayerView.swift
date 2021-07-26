@@ -81,6 +81,7 @@ public class DplayerView: UIView {
     var hideControlViewTimer: Timer!
     var dateTimeDisplayTimer: Timer!
     var clickDebounceTimer: Timer!
+    var danmuListenTimer: Timer!
     var totalTimeSeconds = 0
     var totalTime = "00:00"
     var currentTime = "00:00"
@@ -202,6 +203,7 @@ public class DplayerView: UIView {
         originalFrame = self.frame
         startDateTimeTimer()
         print(videoUrl)
+        danmuListenTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(checkDanmuLayer), userInfo: nil, repeats: true)
     }
     
     func initSlider() {
@@ -624,6 +626,8 @@ public class DplayerView: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        self.danmuListenTimer.invalidate()
+        self.danmuListenTimer = nil
     }
 }
 
@@ -890,17 +894,29 @@ extension DplayerView {
         }
     }
     
+    @objc func checkDanmuLayer() {
+        guard let danmuLayer = self.danmuLayer, let subLayers = danmuLayer.sublayers else {
+            return
+        }
+        let isPlaying = self.player.isPlaying
+        if isPlaying {
+            return
+        }
+        for subLayer in subLayers {
+            self.pauseLayer(layer: subLayer)
+        }
+    }
+    
     func playOrPauseDanmu() {
         guard let danmuLayer = self.danmuLayer, let subLayers = danmuLayer.sublayers else {
             return
         }
         let isPlaying = self.player.isPlaying
+        if !isPlaying {
+            return
+        }
         for subLayer in subLayers {
-            if !isPlaying {
-                self.pauseLayer(layer: subLayer)
-            } else {
-                self.resumeLayer(layer: subLayer)
-            }
+            self.resumeLayer(layer: subLayer)
         }
     }
     
