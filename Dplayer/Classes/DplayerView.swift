@@ -83,7 +83,7 @@ public class DplayerView: UIView {
     public var longPressPlayRate: Float = 2.0
     public var danmuConfig: DanmuConfig = DanmuConfig()
     public var danmus: [Danmu] = []
-    public var danmuDict: [Float: [Danmu]] = [:]
+    var danmuDict: [Float: [Danmu]] = [:]
     var danmuChannelDict: [Int: CGFloat] = [:]
     var danmuDictHandled: [Float: [Int: Danmu?]] = [:]
     var latestDanmuTimes: CapacityArray<Float> = CapacityArray<Float>(capacity: 5)
@@ -564,10 +564,10 @@ public class DplayerView: UIView {
     }
     
     public func playUrl(url: String, progress: Float = 0.0) {
-        if url == videoUrl {
-//            print("地址未变化")
-            return
-        }
+//        if url == videoUrl {
+////            print("地址未变化")
+//            return
+//        }
         guard let urlURL = URL(string: url) else {
 //            print(url)
             fatalError("播放地址错误")
@@ -596,7 +596,7 @@ public class DplayerView: UIView {
             player.seek(to: CMTimeMakeWithSeconds(Float64(progress), preferredTimescale: 64))
         }
         startHideControlViewTimer()
-        
+        self.resetDanmuData()
         self.addDanmuLayer()
         print(videoUrl)
     }
@@ -734,18 +734,12 @@ extension DplayerView {
 
 extension DplayerView {
 
-    public func initDanmu() {
-        for i in 0..<10000 {
-            var danmu = Danmu()
-            danmu.id = "\(i + 1)"
-            danmu.time = Float(arc4random() % UInt32(self.totalTimeSeconds)) + (Float(arc4random() % UInt32(9)) / 10)
-            danmu.content = "第\(danmu.time)"
-            self.danmus.append(danmu)
-            if !self.danmuDict.keys.contains(danmu.time) {
-                self.danmuDict[danmu.time] = []
-            }
-            self.danmuDict[danmu.time]?.append(danmu)
-        }
+    func resetDanmuData() {
+        self.danmus = []
+        self.danmuDict = [:]
+        self.danmuChannelDict = [:]
+        self.danmuDictHandled = [:]
+        self.latestDanmuTimes.clear()
     }
     
     // TODO: refine the logic
@@ -1027,5 +1021,9 @@ struct CapacityArray<T> {
             self.value.remove(at: 0)
         }
         self.value.append(element)
+    }
+    
+    mutating func clear() {
+        self.value = []
     }
 }
