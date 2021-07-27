@@ -31,14 +31,15 @@ class ViewController: UIViewController, DplayerDelegate {
         diyPlayerView.delegate = self
         diyPlayerView.bottomProgressBarViewColor = UIColor.red
         view.addSubview(diyPlayerView)
-        if self.video["url"] == nil {
-            self.video["url"] = videos[0]
+        self.playVideo()
+        
+        let playBtn = UIButton()
+        playBtn.setTitle("播放", for: .normal)
+        self.view.addSubview(playBtn)
+        playBtn.snp.makeConstraints { (maker) in
+            maker.center.equalToSuperview()
         }
-
-        let videoProgress = self.video["progress"] ?? "0"
-        if let url = self.video["url"] {
-            diyPlayerView.playUrl(url: url, progress: Float(videoProgress) ?? 0.0)
-        }
+        playBtn.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -53,6 +54,17 @@ class ViewController: UIViewController, DplayerDelegate {
         super.didReceiveMemoryWarning()
     }
 
+    @objc func playVideo() {
+        if self.video["url"] == nil {
+            self.video["url"] = videos[0]
+        }
+
+        let videoProgress = self.video["progress"] ?? "0"
+        if let url = self.video["url"] {
+            diyPlayerView.playUrl(url: url, progress: Float(videoProgress) ?? 0.0)
+        }
+    }
+    
     func fullScreen() {
 
     }

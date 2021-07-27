@@ -577,7 +577,6 @@ public class DplayerView: UIView {
             playToEnd()
             closePlayer()
             playerView.layer.sublayers?.remove(at: 0)
-            playerView.layer.sublayers?.remove(at: 1)
             stopHideControlViewTimer()
         }
         
