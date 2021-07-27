@@ -60,6 +60,7 @@ public class DplayerView: UIView {
     public var danmuDict: [Float: [Danmu]] = [:]
     var danmuDictHandled: [Float: [Int: Danmu?]] = [:]
     var latestDanmuTimes: CapacityArray<Float> = CapacityArray<Float>(capacity: 5)
+    var isSeekDanmu = false
     public var channelHeight: CGFloat = 22.0
     public var playerRate: Float = 1.0
     public var longPressPlayRate: Float = 2.0
@@ -449,6 +450,7 @@ public class DplayerView: UIView {
         }
         self.playBtn.setImage(UIImage.getUIImageByName(player.isPlaying ? "pause" : "play"), for: .normal)
         loadingImageView.isHidden = !player.isPlaying
+        seekToTimeDanmu(time: value)
     }
     
     @objc func clickTapPlayer(_ sender: UITapGestureRecognizer) {
@@ -708,6 +710,13 @@ extension DplayerView {
 }
 
 extension DplayerView {
+    
+    var danmuSpeed: Float {
+        get {
+            return 414.0 / 6.0
+        }
+    }
+    
     public func initDanmu() {
         for i in 0..<self.danmuMaxChannelNumber {
             self.danmuChannelDict[i] = 0
@@ -727,6 +736,57 @@ extension DplayerView {
         self.prepareDanmuLayer()
     }
     
+    // TODO: refine the logic
+    func seekToTimeDanmu(time: Float) {
+        print("seek to: \(time)")
+        guard let danmuLayer = self.danmuLayer, let sublayers = danmuLayer.sublayers else {
+            return
+        }
+        self.isSeekDanmu = true
+        let danmuLayerWidth = danmuLayer.bounds.width
+        for sublayer in sublayers {
+            sublayer.removeFromSuperlayer()
+        }
+        return
+        let shouldDisplayDuration: Float = (Float(danmuLayerWidth) / self.danmuSpeed / self.currentPlayerRate).roundTo(count: 1)
+        let startTime = (time - shouldDisplayDuration).roundTo(count: 1)
+        for secondTemp in Int(startTime * 10)..<Int((time).roundTo(count: 1) * 10) {
+            let second = Float(secondTemp) / 10.0
+            let currentTimeKey = second.roundTo(count: 1)
+            guard let currentTimeDanmuDict = self.danmuDictHandled[currentTimeKey] else {
+                continue
+            }
+            let currentTimeChannels = currentTimeDanmuDict.keys
+            for channelNumber in currentTimeChannels {
+                if let currentTimeDanmuOptional = currentTimeDanmuDict[channelNumber], let currentTimeDanmu = currentTimeDanmuOptional {
+                    print(currentTimeDanmu.content)
+                    let danmuTextLayer = self.generateDanmuTextLayer(danmu: currentTimeDanmu)
+                    danmuTextLayer.isSeek = true
+                    let hasMovedX: CGFloat = CGFloat((time - second) * danmuSpeed)
+                    let y: CGFloat = self.channelHeight * CGFloat(channelNumber)
+                    danmuTextLayer.frame = CGRect(x: danmuLayer.bounds.width, y: y, width: currentTimeDanmu.width, height: self.channelHeight)
+                    let animation = self.generateDanmuAnimation(duration: (danmuLayerWidth - hasMovedX) / CGFloat(danmuSpeed))
+                    animation.fromValue = danmuLayerWidth + currentTimeDanmu.width - hasMovedX
+                    animation.toValue = 0 - currentTimeDanmu.width
+                    danmuTextLayer.add(animation, forKey: nil)
+                    self.danmuLayer?.addSublayer(danmuTextLayer)
+                    self.pauseLayer(layer: danmuTextLayer)
+                    latestDanmuTimes.push(element: currentTimeKey)
+                }
+            }
+        }
+        self.isSeekDanmu = false
+    }
+    
+    func generateDanmuAnimation(duration: CGFloat) -> CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: "position.x")
+        animation.duration = CFTimeInterval(duration)
+        animation.beginTime = CACurrentMediaTime()
+        animation.fillMode = .removed
+        
+        return animation
+    }
+    
     func generateDanmuTextLayer(danmu: Danmu) -> CustomCATextLayer {
         let danmuTextLayer = CustomCATextLayer()
         danmuTextLayer.foregroundColor = danmu.color.cgColor
@@ -736,19 +796,9 @@ extension DplayerView {
         danmuTextLayer.alignmentMode = .center
         return danmuTextLayer
     }
-    
-    // 非直播视频使用
+
     func prepareDanmuLayer() {
-//        guard let danmuLayer = self.danmuLayer else {
-//            return
-//        }
         let speed: CGFloat = 414.0 / 6.0
-//        danmuLayer.isHidden = true
-//        for i in 0..<self.danmuMaxChannelNumber {
-//            let channelLayer = CALayer()
-//            channelLayer.frame = CGRect(x: danmuLayer.bounds.width, y: self.channelHeight * CGFloat(i), width: 0, height: self.channelHeight)
-//            danmuLayer.addSublayer(channelLayer)
-//        }
         // 按照视频时长，生成每0.1s的弹幕textlayer
         // 如果当前时间点存在弹幕就均匀分布在n个弹幕轨道
         // 但是要注意当前轨道上一个弹幕layer的宽度，不能重叠，如出现重叠就尝试移动到下一个轨道，如果全部轨道都占满，则舍弃该弹幕
@@ -765,13 +815,7 @@ extension DplayerView {
                     var currentTimeDanmu = currentTimeDanmus[i]
                     let danmuTextLayer = self.generateDanmuTextLayer(danmu: currentTimeDanmu)
                     for j in 0..<danmuMaxChannelNumber {
-//                        guard let channelLayer = danmuLayer.sublayers?[j] else {
-//                            continue
-//                        }
                         let currentShouldWidth = CGFloat(currentTime) * speed
-//                        if channelLayer.bounds.width > currentShouldWidth {
-//                            continue
-//                        }
                         if self.danmuChannelDict[j] ?? 0.0 > currentShouldWidth {
                             continue
                         }
@@ -781,41 +825,26 @@ extension DplayerView {
                         self.danmuDictHandled[currentTime]?[j] = currentTimeDanmu
                         let newWidth = CGFloat(currentTime) * speed + danmuTextLayerWidth
                         self.danmuChannelDict[j] = newWidth
-//                        let newSize = CGSize(width: newWidth, height: channelLayer.bounds.height)
-//                        danmuTextLayer.frame = CGRect(x: CGFloat(currentTime) * speed, y: 0, width: danmuTextLayerWidth, height: newSize.height)
-//                        channelLayer.bounds.size = newSize
-//                        channelLayer.addSublayer(danmuTextLayer)
                         break
                     }
                 }
             }
         }
-//        print(self.danmuDictHandled)
     }
     
-    // 直播视频使用
+
     func playingDanmu(currentTime: Float) {
+//        if self.isSeekDanmu {
+//            return
+//        }
         guard let danmuLayer = self.danmuLayer else {
             return
         }
-//        guard let danmuChannelLayers = danmuLayer.sublayers else {
-//            return
-//        }
-//        let speed: CGFloat = 414.0 / 6.0
-//        if currentTime > 0.6 {
-//            danmuLayer.isHidden = false
-//        }
-//        for danmuChannelLayer in danmuChannelLayers {
-//            danmuChannelLayer.frame.origin.x = danmuLayer.bounds.width - CGFloat(currentTime) * speed
-//        }
-//        return
-        
         
         let currentTimeKey = currentTime.roundTo(count: 1)
         if self.latestDanmuTimes.value.contains(currentTimeKey) {
             return
         }
-        let animation = CABasicAnimation(keyPath: "position.x")
 //        let speed: CGFloat = 414.0 / 6.0 * CGFloat(self.currentPlayerRate)
         let speed: CGFloat = 414.0 / 6.0
         if !self.danmuDict.keys.contains(currentTimeKey) {
@@ -828,19 +857,11 @@ extension DplayerView {
         var currentTimeHasGenerateChannelNumbers: [Int] = []
         for i in 0..<currentTimeChannelCount {
             let currentChannelDanmu = currentTimeDanmus[i]
-            let danmuTextLayer = CustomCATextLayer()
-            danmuTextLayer.foregroundColor = currentChannelDanmu.color.cgColor
-            danmuTextLayer.font = UIFont.systemFont(ofSize: currentChannelDanmu.fontSize)
-            danmuTextLayer.fontSize = currentChannelDanmu.fontSize
-            danmuTextLayer.string = currentChannelDanmu.content
-            danmuTextLayer.alignmentMode = .center
+            let danmuTextLayer = self.generateDanmuTextLayer(danmu: currentChannelDanmu)
             let size = danmuTextLayer.preferredFrameSize()
 
             var channelNumber = -1
             for j in 0..<danmuMaxChannelNumber {
-//                if let currentDanmuLayerWidth = danmuChannelDict[j], currentDanmuLayerWidth > CGFloat(currentTime) * speed {
-//                    continue
-//                }
                 if currentTimeHasGenerateChannelNumbers.contains(j) {
                     continue
                 }
@@ -852,9 +873,6 @@ extension DplayerView {
                     currentTimeHasGenerateChannelNumbers.append(j)
                     break
                 }
-//                channelNumber = j
-//                break
-                
             }
 
             /// 未找到合适的轨道
@@ -864,16 +882,14 @@ extension DplayerView {
             
 //            danmuChannelDict[channelNumber]! += size.width
             let duration = danmuLayer.bounds.width / speed
-            animation.duration = CFTimeInterval(duration)
-            animation.beginTime = CACurrentMediaTime()
-            animation.fillMode = .removed
+            let animation = generateDanmuAnimation(duration: duration)
             DispatchQueue.main.async {
                 danmuTextLayer.frame = CGRect(x: danmuLayer.bounds.width, y: self.channelHeight * CGFloat(channelNumber), width: size.width, height: self.channelHeight)
                 animation.fromValue = danmuLayer.bounds.width + size.width
                 animation.toValue = 0 - size.width
+                animation.delegate = LayerRemover(for: danmuTextLayer)
                 danmuTextLayer.channel = channelNumber
                 danmuTextLayer.time = currentTimeKey
-                animation.delegate = LayerRemover(for: danmuTextLayer)
                 danmuTextLayer.add(animation, forKey: nil)
                 self.danmuLayer?.addSublayer(danmuTextLayer)
                 self.latestDanmuTimes.push(element: currentTimeKey)
@@ -895,6 +911,9 @@ extension DplayerView {
     }
     
     @objc func checkDanmuLayer() {
+        if self.player == nil {
+            return
+        }
         guard let danmuLayer = self.danmuLayer, let subLayers = danmuLayer.sublayers else {
             return
         }
@@ -970,6 +989,7 @@ extension Float {
 class CustomCATextLayer: CATextLayer {
     var time: Float = 0.0
     var channel: Int = 0
+    var isSeek = false
 }
 
 class LayerRemover: NSObject, CAAnimationDelegate {
