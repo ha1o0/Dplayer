@@ -65,12 +65,22 @@ class ViewController: UIViewController, DplayerDelegate {
         }
     }
     
+    func beforeFullScreen() {
+        self.diyPlayerView.danmuConfig.speed = 896.0 / 8.0
+        self.diyPlayerView.danmuConfig.maxChannelNumber = 15
+    }
+    
     func fullScreen() {
 
     }
     
+    func beforeExitFullScreen() {
+        self.diyPlayerView.danmuConfig.speed = 414.0 / 8.0
+        self.diyPlayerView.danmuConfig.maxChannelNumber = 10
+    }
+    
     func exitFullScreen() {
-
+        
     }
     
     /// 视频准备播放时的代理
@@ -82,13 +92,14 @@ class ViewController: UIViewController, DplayerDelegate {
             var danmu = Danmu()
             danmu.id = "\(i + 1)"
             danmu.time = Float(arc4random() % UInt32(totalTimeSeconds)) + (Float(arc4random() % UInt32(9)) / 10)
-            danmu.content = "第\(danmu.time)个弹幕"
+            danmu.content = "第\(danmu.time)秒弹幕"
             danmu.color = colors[Int(arc4random() % UInt32(5))].withAlphaComponent(0.7)
             danmu.fontSize = fontSizes[Int(arc4random() % UInt32(2))]
             danmus.append(danmu)
         }
         self.diyPlayerView.danmus = danmus
-        self.diyPlayerView.danmuConfig = DanmuConfig()
+        let danmuConfig = DanmuConfig()
+        self.diyPlayerView.danmuConfig = danmuConfig
     }
     
     func pip() {
