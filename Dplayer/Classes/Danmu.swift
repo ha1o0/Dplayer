@@ -32,9 +32,9 @@ public struct DanmuModel {
 }
 
 public protocol DanmuDelegate: AnyObject {
-    func getPlayerView() -> DplayerView
-    func getPlayer() -> AVPlayer
-    func getPlayerLayer() -> CALayer
+    func getPlayerView() -> DplayerView?
+    func getPlayer() -> AVPlayer?
+    func getPlayerLayer() -> CALayer?
     func getPlayerRate() -> Float
     func getTotalTimeSeconds() -> Int
 }

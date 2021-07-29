@@ -685,15 +685,15 @@ extension DplayerView {
 
 // 弹幕相关代理
 extension DplayerView: DanmuDelegate {
-    public func getPlayerView() -> DplayerView {
+    public func getPlayerView() -> DplayerView? {
         return self
     }
     
-    public func getPlayer() -> AVPlayer {
+    public func getPlayer() -> AVPlayer? {
         return self.player
     }
     
-    public func getPlayerLayer() -> CALayer {
+    public func getPlayerLayer() -> CALayer? {
         return self.playerLayer
     }
     
