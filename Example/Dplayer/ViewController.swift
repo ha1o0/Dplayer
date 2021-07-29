@@ -66,8 +66,8 @@ class ViewController: UIViewController, DplayerDelegate {
     }
     
     func beforeFullScreen() {
-        self.diyPlayerView.danmuConfig.speed = 896.0 / 8.0
-        self.diyPlayerView.danmuConfig.maxChannelNumber = 15
+        self.diyPlayerView.danmu.danmuConfig.speed = 896.0 / 8.0
+        self.diyPlayerView.danmu.danmuConfig.maxChannelNumber = 15
     }
     
     func fullScreen() {
@@ -75,8 +75,8 @@ class ViewController: UIViewController, DplayerDelegate {
     }
     
     func beforeExitFullScreen() {
-        self.diyPlayerView.danmuConfig.speed = 414.0 / 8.0
-        self.diyPlayerView.danmuConfig.maxChannelNumber = 10
+        self.diyPlayerView.danmu.danmuConfig.speed = 414.0 / 8.0
+        self.diyPlayerView.danmu.danmuConfig.maxChannelNumber = 8
     }
     
     func exitFullScreen() {
@@ -85,21 +85,25 @@ class ViewController: UIViewController, DplayerDelegate {
     
     /// 视频准备播放时的代理
     func readyToPlay(totalTimeSeconds: Float) {
-        var danmus: [Danmu] = []
+        var danmus: [DanmuModel] = []
         let colors: [UIColor] = [.white, .yellow, .red, .blue, .green]
         let fontSizes: [CGFloat] = [17.0, 14.0]
         for i in 0..<3000 {
-            var danmu = Danmu()
+            var danmu = DanmuModel()
             danmu.id = "\(i + 1)"
             danmu.time = Float(arc4random() % UInt32(totalTimeSeconds)) + (Float(arc4random() % UInt32(9)) / 10)
             danmu.content = "第\(danmu.time)秒弹幕"
             danmu.color = colors[Int(arc4random() % UInt32(5))].withAlphaComponent(0.7)
             danmu.fontSize = fontSizes[Int(arc4random() % UInt32(2))]
+            if i % 500 == 0 {
+                danmu.isSelf = true
+            }
             danmus.append(danmu)
         }
-        self.diyPlayerView.danmus = danmus
-        let danmuConfig = DanmuConfig()
-        self.diyPlayerView.danmuConfig = danmuConfig
+        var danmuConfig = DanmuConfig()
+        danmuConfig.maxChannelNumber = 8
+        self.diyPlayerView.danmu.danmus = danmus
+        self.diyPlayerView.danmu.danmuConfig = danmuConfig
     }
     
     func pip() {
