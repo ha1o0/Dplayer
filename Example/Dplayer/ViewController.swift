@@ -14,7 +14,7 @@ import MediaPlayer
 
 class ViewController: UIViewController, DplayerDelegate {
 
-    var videos = ["https://blog.iword.win/langjie.mp4", "http://192.168.6.242/2.mp4", "https://blog.iword.win/5.mp4", "http://192.168.6.242/3.wmv", "http://192.168.6.242/mjpg.avi", "https://iqiyi.cdn9-okzy.com/20201104/17638_8f3022ce/index.m3u8"]
+    var videos = ["https://blog.iword.win/langjie.mp4", "http://192.168.6.242/2.mp4", "https://blog.iword.win/5.mp4", "http://192.168.6.242/3.wmv", "http://192.168.6.242/mjpg.avi", "https://iqiyi.cdn9-okzy.com/20201104/17638_8f3022ce/index.m3u8", "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8", "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8"]
     let SCREEN_WIDTH = UIScreen.main.bounds.width
     let SCREEN_HEIGHT = UIScreen.main.bounds.height
     var diyPlayerView = DplayerView()
@@ -40,6 +40,26 @@ class ViewController: UIViewController, DplayerDelegate {
             maker.center.equalToSuperview()
         }
         playBtn.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
+        
+        let sendSelfDamuBtn = UIButton()
+        sendSelfDamuBtn.setTitle("模拟发送自己的弹幕", for: .normal)
+        sendSelfDamuBtn.tag = 1
+        self.view.addSubview(sendSelfDamuBtn)
+        sendSelfDamuBtn.snp.makeConstraints { (maker) in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(playBtn.snp.bottom).offset(20)
+        }
+        sendSelfDamuBtn.addTarget(self, action: #selector(sendDanmu(button:)), for: .touchUpInside)
+        
+        let sendOtherDanmuBtn = UIButton()
+        sendOtherDanmuBtn.tag = 2
+        sendOtherDanmuBtn.setTitle("模拟发送别人的弹幕", for: .normal)
+        self.view.addSubview(sendOtherDanmuBtn)
+        sendOtherDanmuBtn.snp.makeConstraints { (maker) in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(sendSelfDamuBtn.snp.bottom).offset(20)
+        }
+        sendOtherDanmuBtn.addTarget(self, action: #selector(sendDanmu(button:)), for: .touchUpInside)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -56,7 +76,7 @@ class ViewController: UIViewController, DplayerDelegate {
 
     @objc func playVideo() {
         if self.video["url"] == nil {
-            self.video["url"] = videos[0]
+            self.video["url"] = videos[7]
         }
 
         let videoProgress = self.video["progress"] ?? "0"
@@ -102,8 +122,17 @@ class ViewController: UIViewController, DplayerDelegate {
         }
         var danmuConfig = DanmuConfig()
         danmuConfig.maxChannelNumber = 8
+//        danmuConfig.mode = DanmuMode.live
         self.diyPlayerView.danmu.danmus = danmus
         self.diyPlayerView.danmu.danmuConfig = danmuConfig
+    }
+    
+    @objc func sendDanmu(button: UIButton) {
+        var danmu = DanmuModel()
+        danmu.isSelf = button.tag == 1
+        danmu.content = "发送了一条弹幕"
+        // 发送弹幕到服务器后呈现在播放器中
+        self.diyPlayerView.danmu.sendDanmu(danmu: &danmu)
     }
     
     func pip() {
