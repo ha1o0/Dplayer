@@ -6,6 +6,12 @@
 
 ## Example
 
+![1321631350185_ pic](https://user-images.githubusercontent.com/11461723/132942357-ed333684-cc30-45bd-b450-cda115d92705.jpg)
+![1331631350185_ pic](https://user-images.githubusercontent.com/11461723/132942362-a3538b41-a33e-4d71-a1a2-854fc67b9cb7.jpg)
+![1341631350186_ pic](https://user-images.githubusercontent.com/11461723/132942365-5b62dc60-4c49-4216-af92-be99cb218866.jpg)
+![1351631350187_ pic](https://user-images.githubusercontent.com/11461723/132942366-99bc6af5-059d-4ec4-afff-44b2726fae63.jpg)
+
+
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
