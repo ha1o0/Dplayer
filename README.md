@@ -13,8 +13,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-Dplayer is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+Dplayer is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'Dplayer'
@@ -22,24 +21,19 @@ pod 'Dplayer'
 
 ## How to use it
 
+### Basic video play
+
 This lib support playing videos that system supports natively.
 ```
 /// VC: DplayerDelegate
-func fullScreen() {
-
-}
-
-func exitFullScreen() {
-
-}
-
 let diyPlayerView = DplayerView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH, height: height))
-diyPlayerView.layer.zPosition = 999
 diyPlayerView.delegate = self
 diyPlayerView.bottomProgressBarViewColor = UIColor.red
 view.addSubview(diyPlayerView)
 diyPlayerView.playUrl(url: videoUrl)
 ```
+
+### Picture in Picture mode
 
 If you want to use picture in picture(pip), please check the example codes.
 ```
@@ -75,6 +69,65 @@ extension ViewController: AVPictureInPictureControllerDelegate {
 }
 
 ```
+
+### Background audio mode
+
+If you want to stay player play when app is in background: 
+1. Ensure you have enabled Background Audio mode in app capabilities configuration.
+2. You need to do something as follow in AppDelegate: 
+```
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    var currentPlayer: AVPlayer?
+    var currentPlayerLayer: AVPlayerLayer?
+    func applicationDidEnterBackground(_ application: UIApplication) {
+
+        // 保持后台播放
+        self.currentPlayerLayer?.player = nil
+    }
+    func applicationWillEnterForeground(_ application: UIApplication) {
+
+        // 恢复播放器画面
+        self.currentPlayerLayer?.player = self.currentPlayer
+    }
+}
+
+// And set the currentPlayer and currentPlayerLayer when player is set to play.
+
+appDelegate.currentPlayer = diyPlayerView.player
+appDelegate.currentPlayerLayer = diyPlayerView.playerLayer
+
+```
+
+### Danmaku
+
+If you want to display danmaku(barrage) over the video player, you can use the danmu service of the player.
+Example code:
+```
+/// 视频准备播放时的代理
+func readyToPlay(totalTimeSeconds: Float) {
+    var danmus: [DanmuModel] = []
+    let colors: [UIColor] = [.white, .yellow, .red, .blue, .green]
+    let fontSizes: [CGFloat] = [17.0, 14.0]
+    for i in 0..<3000 {
+        var danmu = DanmuModel()
+        danmu.id = "\(i + 1)"
+        danmu.time = Float(arc4random() % UInt32(totalTimeSeconds)) + (Float(arc4random() % UInt32(9)) / 10)
+        danmu.content = "第\(danmu.time)秒弹幕"
+        danmu.color = colors[Int(arc4random() % UInt32(5))].withAlphaComponent(0.7)
+        danmu.fontSize = fontSizes[Int(arc4random() % UInt32(2))]
+        if i % 500 == 0 {
+            danmu.isSelf = true
+        }
+        danmus.append(danmu)
+    }
+    var danmuConfig = DanmuConfig()
+    danmuConfig.maxChannelNumber = 8
+    self.diyPlayerView.danmu.danmus = danmus
+    self.diyPlayerView.danmu.danmuConfig = danmuConfig
+}
+```
+
+
 ## Author
 
 sidney, 516202795@qq.com
