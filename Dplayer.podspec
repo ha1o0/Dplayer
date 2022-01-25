@@ -33,7 +33,7 @@ A video player developed by Swift.
   s.source_files = 'Dplayer/Classes/**/*'
   
   s.resource_bundles = {
-     'Dplayer' => ['Dplayer/**/*.{xib,xcassets,gif,png,jpg,jpeg}'],
+     'Dplayer' => ['Dplayer/**/*.{xib,xcassets,gif,png,jpg,jpeg,metal,metallib,ci.metal,ci.metallib,air,ci.air}'],
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

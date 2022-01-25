@@ -21,6 +21,10 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func toPlayerVc(_ sender: UIButton) {
+        guard let url = Bundle.main.url(forResource: "test", withExtension: "ci.metallib") else {
+            fatalError("Unable to find the required Metal shader.")
+        }
+        print(url)
         let vc = ViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }

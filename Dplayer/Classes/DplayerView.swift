@@ -527,8 +527,16 @@ public class DplayerView: UIView {
             stopHideControlViewTimer()
         }
     }
-    
+
     private func customPlay(isLongPress: Bool = false) {
+        if #available(iOS 13.4, *) {
+            print(AVPlayer.HDRMode.dolbyVision.rawValue)
+            print(AVPlayer.HDRMode.hdr10.rawValue)
+            print(AVPlayer.HDRMode.hlg.rawValue)
+            print(AVPlayer.availableHDRModes.rawValue)
+        } else {
+            // Fallback on earlier versions
+        }
         self.player.playImmediately(atRate: self.currentPlayerRate)
         if isLongPress {
             self.rateTipView.isHidden = self.currentPlayerRate == 1.0
@@ -553,7 +561,9 @@ public class DplayerView: UIView {
         }
         
         let asset = AVAsset(url: urlURL)
-        playerItem = AVPlayerItem(asset: asset)
+        let (avComposition, videoComposition) = AssetLoader.loadAsCompositions(asset: asset)
+        playerItem = AVPlayerItem(asset: avComposition)
+        playerItem.videoComposition = videoComposition
         addPlayerObserver(playerItem: playerItem)
         player = AVPlayer(playerItem: playerItem)
         playerLayer = AVPlayerLayer(player: player)

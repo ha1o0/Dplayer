@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,39 @@
 		E991AA7A26A085FD00BB7C8F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991AA7826A085FD00BB7C8F /* HomeViewController.swift */; };
 		E991AA7B26A085FD00BB7C8F /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E991AA7926A085FD00BB7C8F /* HomeViewController.xib */; };
 		E991AAC726A3206000BB7C8F /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991AAC626A3206000BB7C8F /* UserDefault.swift */; };
+		E9E7EB4B27A05C9400511ABC /* test.ci.metal in Sources */ = {isa = PBXBuildFile; fileRef = E9E7EB4A27A05C9400511ABC /* test.ci.metal */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		E9E7EB1E27A053C100511ABC /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ci.metal";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/${INPUT_FILE_BASE}.air",
+			);
+			runOncePerArchitecture = 0;
+			script = "xcrun metal -c -I $MTL_HEADER_SEARCH_PATHS -fcikernel \"${INPUT_FILE_PATH}\" -o \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+		};
+		E9E7EB1F27A053FB00511ABC /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ci.air";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(METAL_LIBRARY_OUTPUT_DIR)/$(INPUT_FILE_BASE).metallib",
+			);
+			runOncePerArchitecture = 0;
+			script = "xcrun metallib -cikernel \"${INPUT_FILE_PATH}\" -o \"${SCRIPT_OUTPUT_FILE_0}\"\n\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
@@ -53,6 +85,7 @@
 		E991AA7826A085FD00BB7C8F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E991AA7926A085FD00BB7C8F /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		E991AAC626A3206000BB7C8F /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		E9E7EB4A27A05C9400511ABC /* test.ci.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = test.ci.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +141,7 @@
 				E991AA7826A085FD00BB7C8F /* HomeViewController.swift */,
 				E991AA7926A085FD00BB7C8F /* HomeViewController.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				E9E7EB4A27A05C9400511ABC /* test.ci.metal */,
 			);
 			name = "Example for Dplayer";
 			path = Dplayer;
@@ -190,6 +224,8 @@
 				11DC9131A6C6C07125E8A4F8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
+				E9E7EB1F27A053FB00511ABC /* PBXBuildRule */,
+				E9E7EB1E27A053C100511ABC /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -359,6 +395,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				E991AA7A26A085FD00BB7C8F /* HomeViewController.swift in Sources */,
+				E9E7EB4B27A05C9400511ABC /* test.ci.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +531,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -506,7 +544,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WZMD84KKFL;
 				INFOPLIST_FILE = Dplayer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = win.iword.dplayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -522,7 +563,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WZMD84KKFL;
 				INFOPLIST_FILE = Dplayer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = win.iword.dplayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -545,7 +589,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -564,7 +612,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
