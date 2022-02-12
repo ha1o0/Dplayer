@@ -14,7 +14,17 @@ import MediaPlayer
 
 class ViewController: UIViewController, DplayerDelegate {
 
-    var videos = ["https://blog.iword.win/langjie.mp4", "http://192.168.6.242/langjie.mp4", "https://blog.iword.win/5.mp4", "http://192.168.6.242/3.wmv", "http://192.168.6.242/mjpg.avi", "https://iqiyi.cdn9-okzy.com/20201104/17638_8f3022ce/index.m3u8", "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8", "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8"]
+    var videos = [
+        "https://blog.iword.win/langjie.mp4",
+        "http://192.168.6.242/langjie.mp4",
+        "https://blog.iword.win/5.mp4",
+        "http://192.168.6.242/2.mp4",
+        "http://192.168.6.242/3.wmv",
+        "http://192.168.6.242/mjpg.avi",
+        "https://iqiyi.cdn9-okzy.com/20201104/17638_8f3022ce/index.m3u8",
+        "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
+        "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8"
+    ]
     let SCREEN_WIDTH = UIScreen.main.bounds.width
     let SCREEN_HEIGHT = UIScreen.main.bounds.height
     var diyPlayerView = DplayerView()
@@ -77,7 +87,7 @@ class ViewController: UIViewController, DplayerDelegate {
 
     @objc func playVideo() {
         if self.video["url"] == nil {
-            self.video["url"] = videos[1]
+            self.video["url"] = videos[3]
         }
 
         let videoProgress = self.video["progress"] ?? "0"
@@ -106,26 +116,26 @@ class ViewController: UIViewController, DplayerDelegate {
     
     /// 视频准备播放时的代理
     func readyToPlay(totalTimeSeconds: Float) {
-        var danmus: [DanmuModel] = []
-        let colors: [UIColor] = [.white, .yellow, .red, .blue, .green]
-        let fontSizes: [CGFloat] = [17.0, 14.0]
-        for i in 0..<3000 {
-            var danmu = DanmuModel()
-            danmu.id = "\(i + 1)"
-            danmu.time = Float(arc4random() % UInt32(totalTimeSeconds)) + (Float(arc4random() % UInt32(9)) / 10)
-            danmu.content = "第\(danmu.time)秒弹幕"
-            danmu.color = colors[Int(arc4random() % UInt32(5))].withAlphaComponent(0.7)
-            danmu.fontSize = fontSizes[Int(arc4random() % UInt32(2))]
-            if i % 500 == 0 {
-                danmu.isSelf = true
-            }
-            danmus.append(danmu)
-        }
-        var danmuConfig = DanmuConfig()
-        danmuConfig.maxChannelNumber = 8
-//        danmuConfig.mode = DanmuMode.live
-        self.diyPlayerView.danmu.danmus = danmus
-        self.diyPlayerView.danmu.danmuConfig = danmuConfig
+//        var danmus: [DanmuModel] = []
+//        let colors: [UIColor] = [.white, .yellow, .red, .blue, .green]
+//        let fontSizes: [CGFloat] = [17.0, 14.0]
+//        for i in 0..<3000 {
+//            var danmu = DanmuModel()
+//            danmu.id = "\(i + 1)"
+//            danmu.time = Float(arc4random() % UInt32(totalTimeSeconds)) + (Float(arc4random() % UInt32(9)) / 10)
+//            danmu.content = "第\(danmu.time)秒弹幕"
+//            danmu.color = colors[Int(arc4random() % UInt32(5))].withAlphaComponent(0.7)
+//            danmu.fontSize = fontSizes[Int(arc4random() % UInt32(2))]
+//            if i % 500 == 0 {
+//                danmu.isSelf = true
+//            }
+//            danmus.append(danmu)
+//        }
+//        var danmuConfig = DanmuConfig()
+//        danmuConfig.maxChannelNumber = 8
+////        danmuConfig.mode = DanmuMode.live
+//        self.diyPlayerView.danmu.danmus = danmus
+//        self.diyPlayerView.danmu.danmuConfig = danmuConfig
     }
     
     @objc func sendDanmu(button: UIButton) {

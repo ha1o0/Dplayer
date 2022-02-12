@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Dplayer'
-  s.version          = '1.3.0'
+  s.version          = '1.4.0'
   s.summary          = 'A video player.'
 
 # This description is used to generate tags and improve search results.
@@ -32,8 +32,12 @@ A video player developed by Swift.
 
   s.source_files = 'Dplayer/Classes/**/*'
   
+  s.ios.pod_target_xcconfig = { 'METAL_LIBRARY_OUTPUT_DIR' => '${TARGET_BUILD_DIR}/Dplayer.bundle/' }
+  
+  s.weak_frameworks = 'MetalPerformanceShaders', 'Metal'
+  
   s.resource_bundles = {
-     'Dplayer' => ['Dplayer/**/*.{xib,xcassets,gif,png,jpg,jpeg,metal,metallib,ci.metal,ci.metallib,air,ci.air}'],
+     'Dplayer' => ['Dplayer/**/*.{xib,xcassets,gif,png,jpg,jpeg}'],
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

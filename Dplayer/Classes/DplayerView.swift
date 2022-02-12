@@ -529,14 +529,14 @@ public class DplayerView: UIView {
     }
 
     private func customPlay(isLongPress: Bool = false) {
-        if #available(iOS 13.4, *) {
-            print(AVPlayer.HDRMode.dolbyVision.rawValue)
-            print(AVPlayer.HDRMode.hdr10.rawValue)
-            print(AVPlayer.HDRMode.hlg.rawValue)
-            print(AVPlayer.availableHDRModes.rawValue)
-        } else {
-            // Fallback on earlier versions
-        }
+//        if #available(iOS 13.4, *) {
+//            print(AVPlayer.HDRMode.dolbyVision.rawValue)
+//            print(AVPlayer.HDRMode.hdr10.rawValue)
+//            print(AVPlayer.HDRMode.hlg.rawValue)
+//            print(AVPlayer.availableHDRModes.rawValue)
+//        } else {
+//            // Fallback on earlier versions
+//        }
         self.player.playImmediately(atRate: self.currentPlayerRate)
         if isLongPress {
             self.rateTipView.isHidden = self.currentPlayerRate == 1.0
