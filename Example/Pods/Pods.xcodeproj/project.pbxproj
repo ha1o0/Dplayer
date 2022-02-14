@@ -28,7 +28,7 @@
 		55C165921B461CF0E207A44B3B750DD9 /* ConstraintDirectionalInsetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41715E9A7AB1EA9F64C60E3A68B4F02E /* ConstraintDirectionalInsetTarget.swift */; };
 		5DAA86CA6A1C5B942E57E6F6900C0308 /* ConstraintDirectionalInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD83F362DF2AFD14A12E1C2FC247776A /* ConstraintDirectionalInsets.swift */; };
 		5E5A03BC4D3CC202A5499F18D8ABC934 /* SnapKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D0F16A17DCAFA0A8DE39FADC53E8 /* SnapKit-dummy.m */; };
-		61FA75B086A2A27F5C4A8494AEA6C7D7 /* HDR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 98814DEDEF000D840760D186D3CD4082 /* HDR.metal */; };
+		61FA75B086A2A27F5C4A8494AEA6C7D7 /* HDR.ci.metal in Sources */ = {isa = PBXBuildFile; fileRef = 98814DEDEF000D840760D186D3CD4082 /* HDR.ci.metal */; };
 		62432FE3FFA58D1B45D780CC27E58577 /* ConstraintItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD0DFF0B343EC832A3F5F93F88666B7 /* ConstraintItem.swift */; };
 		62995C5C077987801666EAD95DAB8AF0 /* ConstraintMakerFinalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55D8A6D57DABF446C1882BBD64B01B /* ConstraintMakerFinalizable.swift */; };
 		6D6012D1DACA5AA7B789397E24EDD4FE /* ConstraintView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3CB4C3E6D2644140CFE26880F5625D /* ConstraintView+Extensions.swift */; };
@@ -80,6 +80,37 @@
 		F7EFCEFDD4224CAFA5A9D7F406C00147 /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB3188A3D745EDB74FD7072C0679A4B /* Constraint.swift */; };
 		FF822921BDC40245D3E2C7BD610BBB7F /* ConstraintLayoutGuide+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB258D37FA7C0D42F805D92E60FE8D8 /* ConstraintLayoutGuide+Extensions.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		E96F42CF27BAA1B3000AFADB /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ci.air";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(METAL_LIBRARY_OUTPUT_DIR)/$(INPUT_FILE_BASE).metallib",
+			);
+			runOncePerArchitecture = 0;
+			script = "xcrun metallib -cikernel \"${INPUT_FILE_PATH}\" -o \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+		};
+		E96F42D027BAA1EA000AFADB /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ci.metal";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/${INPUT_FILE_BASE}.air",
+			);
+			runOncePerArchitecture = 0;
+			script = "xcrun metal -c -I $MTL_HEADER_SEARCH_PATHS -fcikernel \"${INPUT_FILE_PATH}\" -o \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		08FA8E33CCF8F539220AB2268C7CE385 /* PBXContainerItemProxy */ = {
@@ -185,7 +216,7 @@
 		947F2E543E35B95585B00AC3D54C0535 /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Source/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
 		97870234278B5438AAF7F46D8AA016EA /* Toast_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Toast_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		98814DEDEF000D840760D186D3CD4082 /* HDR.metal */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.metal; path = HDR.metal; sourceTree = "<group>"; };
+		98814DEDEF000D840760D186D3CD4082 /* HDR.ci.metal */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.metal; path = HDR.ci.metal; sourceTree = "<group>"; };
 		9C5153DBB001875353D1557DBE0A443D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		9CAD856A5E2AAB22D3E9AF7B7EF4E8D1 /* Danmu.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Danmu.swift; path = Dplayer/Classes/Danmu.swift; sourceTree = "<group>"; };
 		9D13C5166B9B988742418766710EDA38 /* Pods-Dplayer_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Dplayer_Example-dummy.m"; sourceTree = "<group>"; };
@@ -314,7 +345,6 @@
 			isa = PBXGroup;
 			children = (
 				D993A10D04DB7C5132EDD906D74668C6 /* Constants.swift */,
-				98814DEDEF000D840760D186D3CD4082 /* HDR.metal */,
 				F35A5A6ED6B19C134BE07D56C797DFB0 /* Image+Gif.swift */,
 				B1684A31AF86A02D475E201CC691BA50 /* TimeUtil.swift */,
 				5FC5174F8879AF26AC34C480383AEAB9 /* UIColor+hex.swift */,
@@ -482,6 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				6A9EB1FEA0AD722E6B65E8046EE94F49 /* AVVideoCompositionBuilder.swift */,
+				98814DEDEF000D840760D186D3CD4082 /* HDR.ci.metal */,
 				64948BFB7FB54CE82ACE61255B533DBA /* Composition.swift */,
 			);
 			path = HDR;
@@ -631,6 +662,8 @@
 				0C4444355ADE2D4C23E50BD0E4918550 /* Resources */,
 			);
 			buildRules = (
+				E96F42D027BAA1EA000AFADB /* PBXBuildRule */,
+				E96F42CF27BAA1B3000AFADB /* PBXBuildRule */,
 			);
 			dependencies = (
 				46EF9B3727291138071C854C30C36805 /* PBXTargetDependency */,
@@ -887,7 +920,7 @@
 				E265664AE1722B6ADEBAC374E675D2DD /* Dplayer-dummy.m in Sources */,
 				7CD51AB77DA2AD36E69CBD54B09B55EF /* DplayerView.swift in Sources */,
 				47DDEB2F94E9F8873FECBA386DF0EF9D /* DplayerView.xib in Sources */,
-				61FA75B086A2A27F5C4A8494AEA6C7D7 /* HDR.metal in Sources */,
+				61FA75B086A2A27F5C4A8494AEA6C7D7 /* HDR.ci.metal in Sources */,
 				E24B14F5A394BD217F961DCA8BABAD0E /* Image+Gif.swift in Sources */,
 				4AB99A2684A5A67055792C59F9802F92 /* TimeUtil.swift in Sources */,
 				D9F8450D0D1DA30C20B566291DA4A7ED /* UIColor+hex.swift in Sources */,

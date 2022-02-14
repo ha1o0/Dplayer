@@ -37,7 +37,7 @@ A video player developed by Swift.
   s.weak_frameworks = 'MetalPerformanceShaders', 'Metal'
   
   s.resource_bundles = {
-     'Dplayer' => ['Dplayer/**/*.{xib,xcassets,gif,png,jpg,jpeg}'],
+     'Dplayer' => ['Dplayer/**/*.{xib,xcassets,gif,png,jpg,jpeg,metal,metallib}'],
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

@@ -44,15 +44,7 @@ class HDRIndicatorFilter: CIFilter {
     @available(iOS 11.0, *)
     static var kernel: CIColorKernel = {
         var bundle = getBundle()
-        let device = MTLCreateSystemDefaultDevice()
-        do {
-            let bundleLib = try device?.makeDefaultLibrary(bundle: bundle)
-        } catch {
-            print("Couldn't locate default library for bundle: \(bundle)")
-            print( error )
-        }
-//        bundle = Bundle.main
-        guard let url = bundle.url(forResource: "default", withExtension: "metallib") else {
+        guard let url = bundle.url(forResource: "HDR", withExtension: "ci.metallib") else {
             fatalError("Unable to find the required Metal shader.")
         }
         do {
