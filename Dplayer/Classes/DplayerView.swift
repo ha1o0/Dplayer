@@ -49,6 +49,7 @@ public class DplayerView: UIView {
     @IBOutlet weak var bottomProgressView: UIProgressView!
     @IBOutlet weak var rateTipView: UIView!
     @IBOutlet weak var rateTipLabel: UILabel!
+    @IBOutlet weak var hdrBtn: UIButton!
     @IBOutlet weak var pipBtn: UIButton!
     
     public var playerItem: AVPlayerItem!
@@ -58,6 +59,12 @@ public class DplayerView: UIView {
     public var playerRate: Float = 1.0
     public var longPressPlayRate: Float = 2.0
     public var danmu: Danmu = Danmu()
+    public var isHdr: Bool = false {
+        didSet {
+            hdrBtn.tintColor = isHdr ? self.bottomProgressBarViewColor : UIColor.white
+        }
+    }
+    var hasRemovedObserver = false
     var loadingImageView: UIImageView!
     var systemVolumeView = MPVolumeView()
     var videoUrl = ""
@@ -382,6 +389,32 @@ public class DplayerView: UIView {
         }
     }
     
+    @IBAction func enableHdr(_ sender: UIButton) {
+        isHdr = !isHdr
+        
+//        if #available(iOS 14.0, *) {
+//            playerItem.appliesPerFrameHDRDisplayMetadata = isHdr
+//        } else {
+//            // Fallback on earlier versions
+//        }
+        if !isHdr {
+            playerItem.videoComposition = nil
+        } else {
+            guard let urlURL = URL(string: videoUrl) else {
+                fatalError("播放地址错误")
+            }
+            let asset = AVAsset(url: urlURL)
+            let (_, videoComposition) = AssetLoader.loadAsCompositions(asset: asset)
+            playerItem.videoComposition = videoComposition
+            
+        }
+        if !hasRemovedObserver {
+            removePlayerObserver(playerItem: playerItem)
+            hasRemovedObserver = true
+        }
+        
+    }
+    
     @IBAction func pip(_ sender: UIButton) {
         if let delegate = delegate, let pip = delegate.pip {
             pip()
@@ -561,9 +594,7 @@ public class DplayerView: UIView {
         }
         
         let asset = AVAsset(url: urlURL)
-        let (avComposition, videoComposition) = AssetLoader.loadAsCompositions(asset: asset)
-        playerItem = AVPlayerItem(asset: avComposition)
-        playerItem.videoComposition = videoComposition
+        playerItem = AVPlayerItem(asset: asset)
         addPlayerObserver(playerItem: playerItem)
         player = AVPlayer(playerItem: playerItem)
         playerLayer = AVPlayerLayer(player: player)
