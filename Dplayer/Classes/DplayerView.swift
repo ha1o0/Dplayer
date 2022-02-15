@@ -555,7 +555,9 @@ public class DplayerView: UIView {
     public func closePlayer() {
         if (player != nil) {
             player.pause()
-            removePlayerObserver(playerItem: playerItem)
+            if !hasRemovedObserver {
+                removePlayerObserver(playerItem: playerItem)
+            }
             player = nil
             stopHideControlViewTimer()
         }
