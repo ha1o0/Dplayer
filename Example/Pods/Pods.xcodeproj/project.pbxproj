@@ -83,7 +83,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
-		E96F432D27BD4A41000AFADB /* PBXBuildRule */ = {
+		E96F436827BD4DA8000AFADB /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ci.air";
@@ -96,7 +96,7 @@
 			);
 			script = "xcrun metallib -cikernel \"${INPUT_FILE_PATH}\" -o \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 		};
-		E96F432E27BD4AAA000AFADB /* PBXBuildRule */ = {
+		E96F436927BD4DD1000AFADB /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ci.metal";
@@ -661,8 +661,8 @@
 				0C4444355ADE2D4C23E50BD0E4918550 /* Resources */,
 			);
 			buildRules = (
-				E96F432E27BD4AAA000AFADB /* PBXBuildRule */,
-				E96F432D27BD4A41000AFADB /* PBXBuildRule */,
+				E96F436927BD4DD1000AFADB /* PBXBuildRule */,
+				E96F436827BD4DA8000AFADB /* PBXBuildRule */,
 			);
 			dependencies = (
 				46EF9B3727291138071C854C30C36805 /* PBXTargetDependency */,
