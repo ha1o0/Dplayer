@@ -64,6 +64,7 @@ public class DplayerView: UIView {
             hdrBtn.tintColor = isHdr ? self.bottomProgressBarViewColor : UIColor.white
         }
     }
+    public var hdrComposition: AVVideoComposition?
     var hasRemovedObserver = false
     var loadingImageView: UIImageView!
     var systemVolumeView = MPVolumeView()
@@ -397,22 +398,11 @@ public class DplayerView: UIView {
 //        } else {
 //            // Fallback on earlier versions
 //        }
-        if !isHdr {
-            playerItem.videoComposition = nil
-        } else {
-            guard let urlURL = URL(string: videoUrl) else {
-                fatalError("播放地址错误")
-            }
-            let asset = AVAsset(url: urlURL)
-            let (_, videoComposition) = AssetLoader.loadAsCompositions(asset: asset)
-            playerItem.videoComposition = videoComposition
-            
-        }
+        playerItem.videoComposition = isHdr ? self.hdrComposition : nil
         if !hasRemovedObserver {
             removePlayerObserver(playerItem: playerItem)
             hasRemovedObserver = true
         }
-        
     }
     
     @IBAction func pip(_ sender: UIButton) {
@@ -612,6 +602,7 @@ public class DplayerView: UIView {
         startHideControlViewTimer()
         self.danmu.resetDanmuLayer()
         print(videoUrl)
+        self.hdrComposition = AVPlayer.getAVVideoComposition(videoUrl: videoUrl)
     }
     
     @objc public func reset() {
@@ -755,5 +746,17 @@ extension DplayerView: DanmuDelegate {
 extension AVPlayer {
     public var isPlaying: Bool {
         return self.rate != 0 && self.error == nil
+    }
+}
+
+extension AVPlayer {
+    public static func getAVVideoComposition(videoUrl: String) -> AVVideoComposition? {
+        if let url = URL(string: videoUrl) {
+            let asset = AVAsset(url: url)
+            let (_, videoComposition) = AssetLoader.loadAsCompositions(asset: asset)
+            return videoComposition
+        } else {
+            return nil
+        }
     }
 }
