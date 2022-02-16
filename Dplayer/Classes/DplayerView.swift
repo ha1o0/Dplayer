@@ -49,6 +49,7 @@ public class DplayerView: UIView {
     @IBOutlet weak var bottomProgressView: UIProgressView!
     @IBOutlet weak var rateTipView: UIView!
     @IBOutlet weak var rateTipLabel: UILabel!
+    @IBOutlet weak var hdrBtn: UIButton!
     @IBOutlet weak var pipBtn: UIButton!
     
     public var playerItem: AVPlayerItem!
@@ -58,6 +59,13 @@ public class DplayerView: UIView {
     public var playerRate: Float = 1.0
     public var longPressPlayRate: Float = 2.0
     public var danmu: Danmu = Danmu()
+    public var isHdr: Bool = false {
+        didSet {
+            hdrBtn.tintColor = isHdr ? self.bottomProgressBarViewColor : UIColor.white
+        }
+    }
+    public var hdrComposition: AVVideoComposition?
+    var hasRemovedObserver = false
     var loadingImageView: UIImageView!
     var systemVolumeView = MPVolumeView()
     var videoUrl = ""
@@ -382,6 +390,21 @@ public class DplayerView: UIView {
         }
     }
     
+    @IBAction func enableHdr(_ sender: UIButton) {
+        isHdr = !isHdr
+        
+//        if #available(iOS 14.0, *) {
+//            playerItem.appliesPerFrameHDRDisplayMetadata = isHdr
+//        } else {
+//            // Fallback on earlier versions
+//        }
+        playerItem.videoComposition = isHdr ? self.hdrComposition : nil
+        if !hasRemovedObserver {
+            removePlayerObserver(playerItem: playerItem)
+            hasRemovedObserver = true
+        }
+    }
+    
     @IBAction func pip(_ sender: UIButton) {
         if let delegate = delegate, let pip = delegate.pip {
             pip()
@@ -522,13 +545,23 @@ public class DplayerView: UIView {
     public func closePlayer() {
         if (player != nil) {
             player.pause()
-            removePlayerObserver(playerItem: playerItem)
+            if !hasRemovedObserver {
+                removePlayerObserver(playerItem: playerItem)
+            }
             player = nil
             stopHideControlViewTimer()
         }
     }
-    
+
     private func customPlay(isLongPress: Bool = false) {
+//        if #available(iOS 13.4, *) {
+//            print(AVPlayer.HDRMode.dolbyVision.rawValue)
+//            print(AVPlayer.HDRMode.hdr10.rawValue)
+//            print(AVPlayer.HDRMode.hlg.rawValue)
+//            print(AVPlayer.availableHDRModes.rawValue)
+//        } else {
+//            // Fallback on earlier versions
+//        }
         self.player.playImmediately(atRate: self.currentPlayerRate)
         if isLongPress {
             self.rateTipView.isHidden = self.currentPlayerRate == 1.0
@@ -569,6 +602,7 @@ public class DplayerView: UIView {
         startHideControlViewTimer()
         self.danmu.resetDanmuLayer()
         print(videoUrl)
+        self.hdrComposition = AVPlayer.getAVVideoComposition(videoUrl: videoUrl)
     }
     
     @objc public func reset() {
@@ -712,5 +746,17 @@ extension DplayerView: DanmuDelegate {
 extension AVPlayer {
     public var isPlaying: Bool {
         return self.rate != 0 && self.error == nil
+    }
+}
+
+extension AVPlayer {
+    public static func getAVVideoComposition(videoUrl: String) -> AVVideoComposition? {
+        if let url = URL(string: videoUrl) {
+            let asset = AVAsset(url: url)
+            let (_, videoComposition) = AssetLoader.loadAsCompositions(asset: asset)
+            return videoComposition
+        } else {
+            return nil
+        }
     }
 }

@@ -14,7 +14,17 @@ import MediaPlayer
 
 class ViewController: UIViewController, DplayerDelegate {
 
-    var videos = ["https://blog.iword.win/langjie.mp4", "http://192.168.6.242/langjie.mp4", "https://blog.iword.win/5.mp4", "http://192.168.6.242/3.wmv", "http://192.168.6.242/mjpg.avi", "https://iqiyi.cdn9-okzy.com/20201104/17638_8f3022ce/index.m3u8", "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8", "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8"]
+    var videos = [
+        "https://blog.iword.win/langjie.mp4",
+        "http://192.168.6.242/langjie.mp4",
+        "https://blog.iword.win/5.mp4",
+        "http://192.168.6.242/2.mp4",
+        "http://192.168.6.242/3.wmv",
+        "http://192.168.6.242/mjpg.avi",
+        "https://iqiyi.cdn9-okzy.com/20201104/17638_8f3022ce/index.m3u8",
+        "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
+        "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8"
+    ]
     let SCREEN_WIDTH = UIScreen.main.bounds.width
     let SCREEN_HEIGHT = UIScreen.main.bounds.height
     var diyPlayerView = DplayerView()
@@ -77,7 +87,7 @@ class ViewController: UIViewController, DplayerDelegate {
 
     @objc func playVideo() {
         if self.video["url"] == nil {
-            self.video["url"] = videos[1]
+            self.video["url"] = videos[3]
         }
 
         let videoProgress = self.video["progress"] ?? "0"
