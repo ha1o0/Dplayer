@@ -625,7 +625,7 @@ public class DplayerView: UIView {
         startHideControlViewTimer()
         self.danmu.resetDanmuLayer()
         print(videoUrl)
-        self.hdrComposition = AVPlayer.getAVVideoComposition(videoUrl: videoUrl)
+//        self.hdrComposition = AVPlayer.getAVVideoComposition(videoUrl: videoUrl)
     }
     
     @objc public func reset() {
