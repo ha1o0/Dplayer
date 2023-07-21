@@ -360,13 +360,19 @@ public class DplayerView: UIView {
             beforeFullScreenFunc()
         }
         isFullScreen = true
-        self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
-        playerLayer.frame = self.bounds
+        if #available(iOS 16.0, *) {
+            self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
+            self.playerLayer.frame = self.bounds
+            self.switchMode(full: true)
+        } else {
+            self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
+            self.playerLayer.frame = self.bounds
+            let value = UIInterfaceOrientation.landscapeRight.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
+        }
         dateTimeDisplayLabel.isHidden = !isFullScreen
         bottomProgressView.alpha = 0
         self.danmu.resetDanmuLayer()
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
         if let delegate = delegate, let fullScreenFunc = delegate.fullScreen {
             fullScreenFunc()
         }
@@ -383,11 +389,28 @@ public class DplayerView: UIView {
         dateTimeDisplayLabel.isHidden = !isFullScreen
         bottomProgressView.alpha = showControlView ? 0 : 1
         self.danmu.resetDanmuLayer()
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+        if #available(iOS 16.0, *) {
+            self.switchMode(full: false)
+        } else {
+            let value = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
+        }
         if let delegate = delegate, let exitFullScreenFunc = delegate.exitFullScreen {
             exitFullScreenFunc()
         }
+    }
+    
+    
+    @available(iOS 16.0, *)
+    private func switchMode(full: Bool) {
+        guard
+            let scence = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        else {
+            return
+        }
+        let orientation: UIInterfaceOrientationMask = full ? .landscapeRight : .portrait
+        let geometryPreferencesIOS = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: orientation)
+        scence.requestGeometryUpdate(geometryPreferencesIOS) { error in }
     }
     
     @IBAction func enableHdr(_ sender: UIButton) {

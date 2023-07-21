@@ -1,5 +1,5 @@
 PODS:
-  - Dplayer (1.4.3):
+  - Dplayer (1.4.4):
     - SnapKit (~> 5.0.0)
     - Toast-Swift (~> 5.0.1)
   - SnapKit (5.0.1)
@@ -20,10 +20,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Dplayer: 672b10345e6a6dd125f0c5c6d8cb8fb7cf7a7d5c
+  Dplayer: f2b393011be10edf38b46983f22b582fe5983f44
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
 PODFILE CHECKSUM: 67810b7bbc624fae5775f32946cea70e629e225e
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.12.1
